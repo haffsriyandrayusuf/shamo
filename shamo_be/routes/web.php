@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProductCategoryController;
 
 Route::get('/', function () {
@@ -15,6 +16,7 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
         })->name('dashboard');
         Route::middleware(['admin'])->group(function () {
             Route::resource('category', ProductCategoryController::class);
+            Route::resource('product', ProductController::class);
         });
     });
 });
