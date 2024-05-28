@@ -100,7 +100,16 @@ class ProductGalleryController extends Controller
      */
     public function destroy(ProductGallery $gallery)
     {
+        // Simpan URL gambar yang akan dihapus
+        $hashedFile = $gallery->url;
+
+        // Hapus gallery dari database
         $gallery->delete();
+
+        // Ubah nama file yang di-hash menjadi nama aslinya
+        $originalFileName = basename($hashedFile);
+        // Hapus file dari penyimpanan
+        Storage::delete('public/gallery/' . $originalFileName);
 
         return redirect()->route('dashboard.product.gallery.index', $gallery->products_id);
     }
