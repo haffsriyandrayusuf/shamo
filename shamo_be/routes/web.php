@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\ProductGalleryController;
@@ -23,6 +24,7 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
                 'index', 'create', 'store', 'destroy'
             ]);
             Route::resource('transaction', TransactionController::class);
+            Route::resource('user', UserController::class);
         });
     });
 });
