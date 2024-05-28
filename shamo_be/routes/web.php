@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ProductGalleryController;
 use App\Http\Controllers\ProductCategoryController;
 
 Route::get('/', function () {
@@ -17,6 +18,9 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
         Route::middleware(['admin'])->group(function () {
             Route::resource('category', ProductCategoryController::class);
             Route::resource('product', ProductController::class);
+            Route::resource('product.gallery', ProductGalleryController::class)->shallow()->only([
+                'index', 'create', 'store', 'destroy'
+            ]);
         });
     });
 });
