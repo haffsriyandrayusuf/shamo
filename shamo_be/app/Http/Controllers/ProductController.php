@@ -104,7 +104,23 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
+        // Ambil galeri-galeri produk
+        $galleries = $product->galleries;
+
+        // Hapus setiap galeri dari penyimpanan
+        foreach ($galleries as $gallery) {
+            $hashedFile = $gallery->url;
+            // Hapus galeri dari database
+            $gallery->delete();
+            // Ubah nama file yang di-hash menjadi nama aslinya
+            $originalFileName = basename($hashedFile);
+            // Hapus file gambar dari penyimpanan
+            Storage::delete('public/gallery/' . $originalFileName);
+        }
+
+        // Hapus produk dari database
         $product->delete();
+
 
         return redirect()->route('dashboard.product.index');
     }
